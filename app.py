@@ -3,16 +3,29 @@ from models import db, User, Proposal
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'sua-chave-secreta-aqui')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/app.db'
+
+# SECRET_KEY: obrigatório — use variável de ambiente ou fallback local (inseguro)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback-inseguro-apenas-para-desenvolvimento')
+
+# Configuração do banco de dados
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    # Garante compatibilidade com SQLAlchemy (embora sua URL já seja postgresql://)
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    # Modo local: SQLite
+    if not os.path.exists('instance'):
+        os.makedirs('instance')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/app.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
 @app.before_request
 def setup():
-    if not os.path.exists('instance'):
-        os.makedirs('instance')
     with app.app_context():
         db.create_all()
         if not User.query.filter_by(username='admin').first():
@@ -102,7 +115,7 @@ def admin_all():
                           .all()
     return render_template('admin_all.html', proposals=proposals)
 
-# 👇 Esta parte é essencial para o Render
+# Roda corretamente no Render e localmente
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
