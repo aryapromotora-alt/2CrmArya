@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Todas as Propostas (Admin){% endblock %}
+
+{% block content %}
+<h3>Todas as Propostas</h3>
+{% if proposals %}
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Proposta</th>
+                <th>Parcela</th>
+                <th>Banco</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Comissão</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proposal, username in proposals %}
+            <tr>
+                <td>{{ username }}</td>
+                <td>{{ proposal.proposta }}</td>
+                <td>{{ proposal.parcela }}</td>
+                <td>{{ proposal.banco }}</td>
+                <td>R$ {{ "%.2f"|format(proposal.valor) }}</td>
+                <td>{{ proposal.tipo }}</td>
+                <td>R$ {{ "%.2f"|format(proposal.comissao) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Nenhuma proposta cadastrada.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sistema de Propostas{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h2>Sistema de Propostas</h2>
+        {% if session.user_id %}
+            <nav>
+                <a href="{{ url_for('proposals') }}">Minhas Propostas</a> |
+                <a href="{{ url_for('add_proposal') }}">Adicionar Proposta</a> |
+                {% if session.is_admin %}
+                    <a href="{{ url_for('admin_users') }}">Gerenciar Usuários</a> |
+                    <a href="{{ url_for('admin_all') }}">Ver Todas Propostas</a> |
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+        {% endif %}
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

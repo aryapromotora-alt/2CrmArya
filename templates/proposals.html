@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Adicionar Proposta{% endblock %}
+
+{% block content %}
+<h3>Adicionar Nova Proposta</h3>
+<form method="post">
+    <p>
+        <label>Proposta:</label><br>
+        <input type="text" name="proposta" required>
+    </p>
+    <p>
+        <label>Parcela:</label><br>
+        <input type="number" name="parcela" min="1" required>
+    </p>
+    <p>
+        <label>Banco:</label><br>
+        <input type="text" name="banco" required>
+    </p>
+    <p>
+        <label>Valor (R$):</label><br>
+        <input type="number" step="0.01" name="valor" min="0.01" required>
+    </p>
+    <p>
+        <label>Tipo:</label><br>
+        <select name="tipo" required>
+            <option value="">Selecione</option>
+            <option value="novo">Novo</option>
+            <option value="refinanciamento">Refinanciamento</option>
+            <option value="portabilidade">Portabilidade</option>
+            <option value="refin_da_portabilidade">Refin da Portabilidade</option>
+            <option value="refin_de_carteira">Refin de Carteira</option>
+            <option value="FGTS">FGTS</option>
+            <option value="CLT">CLT</option>
+            <option value="OUTROS">OUTROS</option>
+        </select>
+    </p>
+    <p>
+        <label>Comissão (R$ ou %):</label><br>
+        <input type="number" step="0.01" name="comissao" min="0" required>
+    </p>
+    <button type="submit">Salvar Proposta</button>
+</form>
+{% endblock %}
