@@ -4,21 +4,14 @@ import os
 
 app = Flask(__name__)
 
-# SECRET_KEY: obrigatório — use variável de ambiente ou fallback local (inseguro)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback-inseguro-apenas-para-desenvolvimento')
+# Chave secreta (substitua por uma forte em produção)
+app.config['SECRET_KEY'] = 'sua-chave-secreta-aqui'
 
-# Configuração do banco de dados
-database_url = os.environ.get('DATABASE_URL')
-if database_url:
-    # Garante compatibilidade com SQLAlchemy (embora sua URL já seja postgresql://)
-    if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-else:
-    # Modo local: SQLite
-    if not os.path.exists('instance'):
-        os.makedirs('instance')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/app.db'
+# 🔴 FORÇANDO o uso do PostgreSQL do Render (remova ou comente depois do teste)
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    'postgresql://proposta_db_user:gHAfGxaMNp0FZe1eT2sK16Wwvh4r7V6u@'
+    'dpg-d4do0lbuibrs73dpf0f0-a.oregon-postgres.render.com/proposta_db'
+)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -115,7 +108,6 @@ def admin_all():
                           .all()
     return render_template('admin_all.html', proposals=proposals)
 
-# Roda corretamente no Render e localmente
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
