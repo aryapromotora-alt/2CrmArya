@@ -1,44 +1,34 @@
 {% extends "base.html" %}
 
-{% block title %}Adicionar Proposta{% endblock %}
+{% block title %}Minhas Propostas{% endblock %}
 
 {% block content %}
-<h3>Adicionar Nova Proposta</h3>
-<form method="post">
-    <p>
-        <label>Proposta:</label><br>
-        <input type="text" name="proposta" required>
-    </p>
-    <p>
-        <label>Parcela:</label><br>
-        <input type="number" name="parcela" min="1" required>
-    </p>
-    <p>
-        <label>Banco:</label><br>
-        <input type="text" name="banco" required>
-    </p>
-    <p>
-        <label>Valor (R$):</label><br>
-        <input type="number" step="0.01" name="valor" min="0.01" required>
-    </p>
-    <p>
-        <label>Tipo:</label><br>
-        <select name="tipo" required>
-            <option value="">Selecione</option>
-            <option value="novo">Novo</option>
-            <option value="refinanciamento">Refinanciamento</option>
-            <option value="portabilidade">Portabilidade</option>
-            <option value="refin_da_portabilidade">Refin da Portabilidade</option>
-            <option value="refin_de_carteira">Refin de Carteira</option>
-            <option value="FGTS">FGTS</option>
-            <option value="CLT">CLT</option>
-            <option value="OUTROS">OUTROS</option>
-        </select>
-    </p>
-    <p>
-        <label>Comissão (R$ ou %):</label><br>
-        <input type="number" step="0.01" name="comissao" min="0" required>
-    </p>
-    <button type="submit">Salvar Proposta</button>
-</form>
+<div class="proposals-container">
+    <h3>Minhas Propostas</h3>
+
+    {% if proposals %}
+        <div class="cards-grid">
+            {% for p in proposals %}
+                <div class="proposal-card">
+                    <div class="card-header">
+                        <span class="card-title">{{ p.proposta }}</span>
+                        <span class="card-status">R$ {{ "%.2f"|format(p.valor) }}</span>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Parcela:</strong> {{ p.parcela }}</p>
+                        <p><strong>Banco:</strong> {{ p.banco }}</p>
+                        <p><strong>Tipo:</strong> {{ p.tipo }}</p>
+                        <p><strong>Comissão:</strong> R$ {{ "%.2f"|format(p.comissao) }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Nenhuma proposta cadastrada ainda.</p>
+    {% endif %}
+
+    <div class="actions">
+        <a href="{{ url_for('add_proposal') }}">+ Adicionar Proposta</a>
+    </div>
+</div>
 {% endblock %}
