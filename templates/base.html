@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Sistema de Propostas{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Força o carregamento do CSS com caminho absoluto -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <header class="main-header">
         <div class="header-content">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Arya Promotora" class="header-logo">
+            <!-- Força o carregamento do logo com caminho absoluto -->
+            <img src="/static/logo.png" alt="Logo Arya Promotora" class="header-logo">
             <h2>Sistema de Propostas</h2>
         </div>
         {% if session.user_id %}
