@@ -2,12 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models import db, User, Proposal
 import os
 
-app = Flask(__name__)
+# Define o caminho absoluto da pasta static
+current_dir = os.path.dirname(os.path.abspath(__file__))
+static_folder_path = os.path.join(current_dir, 'static')
+
+app = Flask(
+    __name__,
+    static_url_path='/static',
+    static_folder=static_folder_path
+)
 
 # Chave secreta (substitua por uma forte em produção)
 app.config['SECRET_KEY'] = 'sua-chave-secreta-aqui'
 
-# 🔴 FORÇANDO o uso do PostgreSQL do Render (remova ou comente depois do teste)
+# 🔴 FORÇANDO o uso do PostgreSQL do Render
 app.config['SQLALCHEMY_DATABASE_URI'] = (
     'postgresql://proposta_db_user:gHAfGxaMNp0FZe1eT2sK16Wwvh4r7V6u@'
     'dpg-d4do0lbuibrs73dpf0f0-a.oregon-postgres.render.com/proposta_db'
