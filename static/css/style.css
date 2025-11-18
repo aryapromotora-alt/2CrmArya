@@ -17,14 +17,46 @@ a:hover {
 }
 
 /* Cabeçalho */
-header h2 {
-    color: #FFB347;
-    margin-bottom: 10px;
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 30px;
 }
 
-header nav a {
-    margin-right: 15px;
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-logo {
+    width: 40px;
+    height: auto;
+}
+
+.main-header h2 {
+    color: #FFB347;
+    margin: 0;
+    font-size: 22px;
+}
+
+.main-nav a {
+    color: #FFB347;
+    text-decoration: none;
+    margin-right: 20px;
     font-weight: bold;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Mensagens */
@@ -83,7 +115,7 @@ form button:hover {
     background-color: #ff9e19;
 }
 
-/* Tabelas (para páginas que ainda usam tabela) */
+/* Tabelas (fallback) */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -106,7 +138,7 @@ tr:hover {
     background-color: #1e1e1e;
 }
 
-/* Botão de adicionar proposta (estilo antigo) */
+/* Botão genérico de ação */
 a[href$="/add_proposal"] {
     display: inline-block;
     background-color: #FFB347;
@@ -274,4 +306,85 @@ a[href$="/add_proposal"]:hover {
 
 .actions a:hover {
     background-color: #ff9e19;
+}
+
+/* === ADMIN PAGE === */
+.admin-container {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.admin-form {
+    background-color: #151515;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #FFB347;
+    margin-bottom: 30px;
+}
+
+.admin-form label {
+    display: block;
+    margin-top: 15px;
+    color: #FFB347;
+    font-weight: bold;
+}
+
+.admin-form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background-color: #0A0A0A;
+    color: white;
+    box-sizing: border-box;
+}
+
+.admin-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFB347;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.admin-form button:hover {
+    background-color: #ff9e19;
+}
+
+.users-list {
+    background-color: #151515;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.user-item:last-child {
+    border-bottom: none;
+}
+
+.commission-badge,
+.admin-badge {
+    background-color: #FFB347;
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.admin-badge {
+    background-color: #555;
 }
