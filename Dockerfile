@@ -1,21 +1,23 @@
-# Usa imagem oficial do Python 3.12 (estável)
 FROM python:3.12-slim
 
-# Define o diretório de trabalho
+# Instala dependências do sistema para compilar psycopg2
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Copia os arquivos necessários
+# Copia todos os arquivos necessários
 COPY requirements.txt .
 COPY app.py .
 COPY models.py .
 COPY templates/ templates/
-COPY runtime.txt .  # opcional, mas mantém por consistência
 
-# Instala as dependências
+# Instala dependências do Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expor a porta 5000
 EXPOSE 5000
 
-# Comando de início
 CMD ["python", "app.py"]
