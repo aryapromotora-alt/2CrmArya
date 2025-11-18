@@ -1,0 +1,123 @@
+/* Fundo escuro global */
+body {
+    background-color: #0A0A0A;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Links */
+a {
+    color: #FFB347;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Cabeçalho */
+header h2 {
+    color: #FFB347;
+    margin-bottom: 10px;
+}
+
+header nav a {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+/* Mensagens de erro/sucesso */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 20px 0;
+}
+
+.flashes li {
+    background-color: #2a2a2a;
+    color: #FFB347;
+    padding: 10px;
+    border-left: 3px solid #FFB347;
+    margin-bottom: 8px;
+}
+
+/* Formulários */
+form {
+    background-color: #151515;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    color: #FFB347;
+}
+
+form input,
+form select,
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #0A0A0A;
+    color: white;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #FFB347;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+form button:hover {
+    background-color: #ff9e19;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #151515;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    background-color: #222;
+    color: #FFB347;
+}
+
+tr:hover {
+    background-color: #1e1e1e;
+}
+
+/* Botões de ação */
+a[href$="/add_proposal"] {
+    display: inline-block;
+    background-color: #FFB347;
+    color: #000 !important;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+a[href$="/add_proposal"]:hover {
+    background-color: #ff9e19;
+}
