@@ -121,3 +121,73 @@ a[href$="/add_proposal"] {
 a[href$="/add_proposal"]:hover {
     background-color: #ff9e19;
 }
+
+/* Login Page */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.login-card {
+    background-color: #0A0A0A;
+    border: 2px solid #FFB347;
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.login-card h3 {
+    color: #FFB347;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.login-card label {
+    display: block;
+    text-align: left;
+    color: #FFB347;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #000;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFB347;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.login-card button:hover {
+    background-color: #ff9e19;
+}
