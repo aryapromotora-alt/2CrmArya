@@ -1,10 +1,85 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <style>
+        /* === LOGIN PAGE === */
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-{% block title %}Login{% endblock %}
+        .login-container {
+            background-color: #0A0A0A;
+            border: 2px solid #FFB347;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
 
-{% block content %}
-<div class="login-container">
-    <div class="login-card">
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #FFB347;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            color: #FFB347;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: #000;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FFB347;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #ff9e19;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Arya Promotora" class="logo">
         <h3>Login</h3>
         <form method="post">
@@ -17,5 +92,5 @@
             <button type="submit">Entrar</button>
         </form>
     </div>
-</div>
-{% endblock %}
+</body>
+</html>
