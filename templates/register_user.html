@@ -3,37 +3,41 @@
 {% block title %}Gerenciar Usuários (Admin){% endblock %}
 
 {% block content %}
-<h3>Adicionar Novo Usuário</h3>
-<form method="post" action="{{ url_for('admin_add_user') }}">
-    <p>
-        <label>Nome de usuário:</label><br>
+<div class="admin-container">
+    <h3>Adicionar Novo Usuário</h3>
+
+    <form method="post" action="{{ url_for('admin_add_user') }}" class="admin-form">
+        <label>Nome de usuário:</label>
         <input type="text" name="username" required>
-    </p>
-    <p>
-        <label>Senha:</label><br>
+
+        <label>Senha:</label>
         <input type="password" name="password" required>
-    </p>
-    <p>
-        <label>Comissão padrão (ex: 50.00 ou 5.5):</label><br>
+
+        <label>Comissão padrão (ex: 50.00 ou 5.5):</label>
         <input type="number" step="0.01" name="commission" min="0" value="0.00">
-    </p>
-    <button type="submit">Criar Usuário</button>
-</form>
 
-<hr>
+        <button type="submit">Criar Usuário</button>
+    </form>
 
-<h3>Usuários Cadastrados</h3>
-{% if users %}
-    <ul>
-    {% for u in users %}
-        <li>
-            <strong>{{ u.username }}</strong>
-            {% if not u.is_admin %}— Comissão padrão: R$ {{ "%.2f"|format(u.commission_default) }}{% endif %}
-            {% if u.is_admin %}<em> (admin)</em>{% endif %}
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Nenhum usuário além do admin.</p>
-{% endif %}
+    <hr>
+
+    <h3>Usuários Cadastrados</h3>
+
+    {% if users %}
+        <div class="users-list">
+            {% for u in users %}
+                <div class="user-item">
+                    <strong>{{ u.username }}</strong>
+                    {% if not u.is_admin %}
+                        <span class="commission-badge">R$ {{ "%.2f"|format(u.commission_default) }}</span>
+                    {% else %}
+                        <em class="admin-badge">admin</em>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Nenhum usuário além do admin.</p>
+    {% endif %}
+</div>
 {% endblock %}
