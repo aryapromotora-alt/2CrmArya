@@ -1,34 +1,28 @@
 {% extends "base.html" %}
-
-{% block title %}Minhas Propostas{% endblock %}
-
 {% block content %}
-<div class="proposals-container">
-    <h3>Minhas Propostas</h3>
-
-    {% if proposals %}
-        <div class="cards-grid">
-            {% for p in proposals %}
-                <div class="proposal-card">
-                    <div class="card-header">
-                        <span class="card-title">{{ p.proposta }}</span>
-                        <span class="card-status">R$ {{ "%.2f"|format(p.valor) }}</span>
-                    </div>
-                    <div class="card-body">
-                        <p><strong>Parcela:</strong> {{ p.parcela }}</p>
-                        <p><strong>Banco:</strong> {{ p.banco }}</p>
-                        <p><strong>Tipo:</strong> {{ p.tipo }}</p>
-                        <p><strong>Comissão:</strong> R$ {{ "%.2f"|format(p.comissao) }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>Nenhuma proposta cadastrada ainda.</p>
-    {% endif %}
-
-    <div class="actions">
-        <a href="{{ url_for('add_proposal') }}">+ Adicionar Proposta</a>
-    </div>
-</div>
+<h3>Minhas Propostas</h3>
+{% if proposals %}
+    <table border="1">
+        <tr>
+            <th>Proposta</th>
+            <th>Parcela</th>
+            <th>Banco</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Comissão</th>
+        </tr>
+        {% for p in proposals %}
+        <tr>
+            <td>{{ p.proposta }}</td>
+            <td>{{ p.parcela }}</td>
+            <td>{{ p.banco }}</td>
+            <td>R$ {{ "%.2f"|format(p.valor) }}</td>
+            <td>{{ p.tipo }}</td>
+            <td>R$ {{ "%.2f"|format(p.comissao) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Nenhuma proposta cadastrada.</p>
+{% endif %}
 {% endblock %}

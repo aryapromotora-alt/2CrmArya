@@ -1,51 +1,53 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from models import db, User, Proposal
+from flask_sqlalchemy import SQLAlchemy
 import os
 
-# Define o caminho absoluto da pasta static
-current_dir = os.path.dirname(os.path.abspath(__file__))
-static_folder_path = os.path.join(current_dir, 'static')
-
-app = Flask(
-    __name__,
-    static_url_path='/static',
-    static_folder=static_folder_path
-)
-
-# Chave secreta (substitua por uma forte em produção)
-app.config['SECRET_KEY'] = 'sua-chave-secreta-aqui'
-
-# 🔴 FORÇANDO o uso do PostgreSQL do Render
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'postgresql://proposta_db_user:gHAfGxaMNp0FZe1eT2sK16Wwvh4r7V6u@'
-    'dpg-d4do0lbuibrs73dpf0f0-a.oregon-postgres.render.com/proposta_db'
-)
-
+app = Flask(__name__)
+app.secret_key = 'chave-secreta-muito-segura'  # mude depois
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///propostas.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app)
+db = SQLAlchemy(app)
 
-@app.before_request
-def setup():
-    with app.app_context():
-        db.create_all()
-        if not User.query.filter_by(username='admin').first():
-            admin = User(username='admin', password='admin123', is_admin=True)
-            db.session.add(admin)
-            db.session.commit()
+# === Modelos ===
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+    commission_default = db.Column(db.Float, default=0.0)
 
+class Proposal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    proposta = db.Column(db.String(100), nullable=False)
+    parcela = db.Column(db.Integer, nullable=False)
+    banco = db.Column(db.String(100), nullable=False)
+    valor = db.Column(db.Float, nullable=False)
+    tipo = db.Column(db.String(50), nullable=False)
+    comissao = db.Column(db.Float, nullable=False)
+
+# === Cria banco e admin ao iniciar ===
+@app.before_first_request
+def create_tables():
+    db.create_all()
+    if not User.query.filter_by(username='admin').first():
+        admin = User(username='admin', password='admin123', is_admin=True)
+        db.session.add(admin)
+        db.session.commit()
+
+# === Rotas ===
 @app.route('/')
 def index():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    return redirect(url_for('proposals'))
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username, password=password).first()
+        user = User.query.filter_by(
+            username=request.form['username'],
+            password=request.form['password']
+        ).first()
         if user:
             session['user_id'] = user.id
             session['is_admin'] = user.is_admin
@@ -62,8 +64,7 @@ def logout():
 def proposals():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    user_id = session['user_id']
-    proposals = Proposal.query.filter_by(user_id=user_id).all()
+    proposals = Proposal.query.filter_by(user_id=session['user_id']).all()
     return render_template('proposals.html', proposals=proposals)
 
 @app.route('/add_proposal', methods=['GET', 'POST'])
@@ -111,11 +112,8 @@ def admin_add_user():
 def admin_all():
     if not session.get('is_admin'):
         return redirect(url_for('proposals'))
-    proposals = db.session.query(Proposal, User.username)\
-                          .join(User, Proposal.user_id == User.id)\
-                          .all()
+    proposals = db.session.query(Proposal, User.username).join(User).all()
     return render_template('admin_all.html', proposals=proposals)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)

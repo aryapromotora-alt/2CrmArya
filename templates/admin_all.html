@@ -1,31 +1,30 @@
 {% extends "base.html" %}
-
-{% block title %}Todas as Propostas (Admin){% endblock %}
-
 {% block content %}
-<div class="admin-proposals-container">
-    <h3>Todas as Propostas</h3>
-
-    {% if proposals %}
-        <div class="cards-grid">
-            {% for proposal, username in proposals %}
-                <div class="proposal-card">
-                    <div class="card-header">
-                        <span class="card-title">{{ proposal.proposta }}</span>
-                        <span class="card-status">R$ {{ "%.2f"|format(proposal.valor) }}</span>
-                    </div>
-                    <div class="card-body">
-                        <p><strong>Usuário:</strong> {{ username }}</p>
-                        <p><strong>Parcela:</strong> {{ proposal.parcela }}</p>
-                        <p><strong>Banco:</strong> {{ proposal.banco }}</p>
-                        <p><strong>Tipo:</strong> {{ proposal.tipo }}</p>
-                        <p><strong>Comissão:</strong> R$ {{ "%.2f"|format(proposal.comissao) }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>Nenhuma proposta cadastrada.</p>
-    {% endif %}
-</div>
+<h3>Todas as Propostas</h3>
+{% if proposals %}
+    <table border="1">
+        <tr>
+            <th>Usuário</th>
+            <th>Proposta</th>
+            <th>Parcela</th>
+            <th>Banco</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Comissão</th>
+        </tr>
+        {% for proposal, username in proposals %}
+        <tr>
+            <td>{{ username }}</td>
+            <td>{{ proposal.proposta }}</td>
+            <td>{{ proposal.parcela }}</td>
+            <td>{{ proposal.banco }}</td>
+            <td>R$ {{ "%.2f"|format(proposal.valor) }}</td>
+            <td>{{ proposal.tipo }}</td>
+            <td>R$ {{ "%.2f"|format(proposal.comissao) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Nenhuma proposta.</p>
+{% endif %}
 {% endblock %}

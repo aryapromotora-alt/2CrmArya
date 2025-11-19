@@ -1,44 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Sistema de Propostas{% endblock %}</title>
-    <!-- Força o carregamento do CSS com caminho absoluto -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="utf-8">
+    <title>{% block title %}Sistema{% endblock %}</title>
 </head>
 <body>
-    <header class="main-header">
-        <div class="header-content">
-            <!-- Força o carregamento do logo com caminho absoluto -->
-            <img src="/static/logo.png" alt="Logo Arya Promotora" class="header-logo">
-            <h2>Sistema de Propostas</h2>
-        </div>
-        {% if session.user_id %}
-            <nav class="main-nav">
-                <a href="{{ url_for('proposals') }}">Minhas Propostas</a>
-                <a href="{{ url_for('add_proposal') }}">Adicionar Proposta</a>
-                {% if session.is_admin %}
-                    <a href="{{ url_for('admin_users') }}">Gerenciar Usuários</a>
-                    <a href="{{ url_for('admin_all') }}">Ver Todas Propostas</a>
-                {% endif %}
-                <a href="{{ url_for('logout') }}">Logout</a>
-            </nav>
-        {% endif %}
-    </header>
-
-    <main class="main-content">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class="flashes">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
+    <h2>Sistema de Propostas</h2>
+    {% if session.user_id %}
+        <p>
+            <a href="{{ url_for('proposals') }}">Minhas Propostas</a> |
+            <a href="{{ url_for('add_proposal') }}">Adicionar Proposta</a>
+            {% if session.is_admin %}
+                | <a href="{{ url_for('admin_users') }}">Gerenciar Usuários</a>
+                | <a href="{{ url_for('admin_all') }}">Ver Todas</a>
             {% endif %}
-        {% endwith %}
+            | <a href="{{ url_for('logout') }}">Sair</a>
+        </p>
+    {% endif %}
 
-        {% block content %}{% endblock %}
-    </main>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for msg in messages %}<li>{{ msg }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
 </body>
 </html>
